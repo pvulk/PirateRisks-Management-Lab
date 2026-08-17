@@ -1,0 +1,2631 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PirateRisks Management Lab — Sensibilisation Cyber & Simulation de risques </title>
+
+  <style>
+
+    /* =========================================
+       BASE
+       ========================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #000000;
+      --card: #080808;
+      --card-secondary: #0d0d0f;
+
+      --border: #29292f;
+
+      --text: #ffffff;
+      --muted: #7d7d88;
+
+      --primary: #e63946;
+
+      --success: #31d17c;
+      --danger: #ff3d4f;
+      --warning: #f6b94a;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #000000;
+
+      color: var(--text);
+
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .pirate-title {
+  color: white;
+}
+
+.risks-title {
+  color: #f44355;
+}
+
+.management-title {
+  color: #f44355;
+  margin-left: 10px;
+}
+
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+
+      margin: 0 auto 18px;
+
+      border-radius: 20px;
+
+      border: 2px solid var(--primary);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 38px;
+
+      background: #080808;
+
+      box-shadow:
+        0 0 30px rgba(230, 57, 70, 0.18);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+    }
+
+    .primary {
+      color: var(--primary);
+    }
+
+    .pirate-quote {
+      margin-top: 5px;
+      margin-bottom: 18px;
+
+      font-style: italic;
+      font-weight: 900;
+
+      color: var(--primary);
+
+      font-size: 0.95rem;
+
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle {
+      max-width: 680px;
+
+      margin: auto;
+
+      color: #92929d;
+
+      line-height: 1.65;
+    }
+
+    .tagline {
+      display: inline-block;
+
+      margin-top: 16px;
+
+      padding: 7px 13px;
+
+      border:
+        1px solid rgba(230, 57, 70, 0.35);
+
+      border-radius: 999px;
+
+      color: var(--primary);
+
+      background:
+        rgba(230, 57, 70, 0.05);
+
+      font-size: 0.78rem;
+
+      font-weight: 700;
+
+      letter-spacing: 0.05em;
+    }
+
+    .management-title {
+      margin-left:10px;
+   }
+
+    /* =========================================
+       PROGRESSION
+       ========================================= */
+
+    .progress {
+      display: flex;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-top: 25px;
+    }
+
+    .progress-dot {
+      width: 40px;
+      height: 5px;
+
+      border-radius: 999px;
+
+      background: #252529;
+    }
+
+    .progress-dot.active {
+      background: var(--primary);
+
+      box-shadow:
+        0 0 10px rgba(230, 57, 70, 0.35);
+    }
+
+
+    /* =========================================
+       CARTE PRINCIPALE
+       ========================================= */
+
+    .card {
+      background: #080808;
+
+      border:
+        1px solid #29292f;
+
+      border-radius: 22px;
+
+      padding: 32px;
+
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.8);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+
+      margin-bottom: 8px;
+    }
+
+    .section-description {
+      color: #8b8b96;
+
+      margin-bottom: 28px;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================================
+       FORMULAIRE
+       ========================================= */
+
+    .question-block {
+      margin-bottom: 26px;
+    }
+
+    label,
+    .label {
+      display: block;
+
+      font-weight: 700;
+
+      margin-bottom: 9px;
+    }
+
+    .helper {
+      color: #74747e;
+
+      font-size: 0.85rem;
+
+      margin-bottom: 10px;
+    }
+
+    select {
+      width: 100%;
+
+      padding: 14px;
+
+      background: #030303;
+
+      color: white;
+
+      border:
+        1px solid #34343c;
+
+      border-radius: 11px;
+
+      font-size: 1rem;
+
+      outline: none;
+    }
+
+    select:hover {
+      border-color: #55555f;
+    }
+
+    select:focus {
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 2px rgba(230, 57, 70, 0.08);
+    }
+
+
+    /* =========================================
+       OUTILS
+       ========================================= */
+
+    .tool-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 10px;
+    }
+
+    .check-option,
+    .radio-option {
+      position: relative;
+    }
+
+    .check-option input,
+    .radio-option input {
+      position: absolute;
+
+      opacity: 0;
+    }
+
+    .check-option label,
+    .radio-option label {
+      display: block;
+
+      margin: 0;
+
+      padding: 14px;
+
+      background: #030303;
+
+      border:
+        1px solid #34343c;
+
+      border-radius: 11px;
+
+      cursor: pointer;
+
+      font-weight: 500;
+
+      transition: 0.2s ease;
+    }
+
+    .check-option label:hover,
+    .radio-option label:hover {
+      border-color: #6b6b73;
+
+      background: #080808;
+    }
+
+    .check-option input:checked + label,
+    .radio-option input:checked + label {
+      border-color: var(--primary);
+
+      background:
+        rgba(230, 57, 70, 0.12);
+
+      color: #ff6673;
+
+      box-shadow:
+        0 0 15px rgba(230, 57, 70, 0.07);
+    }
+
+
+    /* =========================================
+       NIVEAUX
+       ========================================= */
+
+    .levels {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 10px;
+    }
+
+
+    /* =========================================
+       BOUTONS
+       ========================================= */
+
+    button {
+      width: 100%;
+
+      padding: 16px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      font-weight: 800;
+
+      font-size: 1rem;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+    }
+
+    .primary-button {
+      background: var(--primary);
+
+      color: #ffffff;
+    }
+
+    .primary-button:hover {
+      background: #f04452;
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 10px 30px
+        rgba(230, 57, 70, 0.25);
+    }
+
+    .secondary-button {
+      background: #050505;
+
+      border:
+        1px solid #34343c;
+
+      color: white;
+
+      margin-top: 10px;
+    }
+
+    .secondary-button:hover {
+      border-color: var(--primary);
+    }
+
+
+    /* =========================================
+       SCÉNARIO
+       ========================================= */
+
+    .scenario-badge {
+      display: inline-block;
+
+      padding: 7px 11px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(230, 57, 70, 0.1);
+
+      color: var(--primary);
+
+      border:
+        1px solid rgba(230, 57, 70, 0.2);
+
+      font-size: 0.8rem;
+
+      font-weight: 700;
+
+      margin-bottom: 18px;
+    }
+
+    .scenario {
+      font-size: 1.14rem;
+
+      line-height: 1.7;
+
+      margin-bottom: 25px;
+    }
+
+    .answers {
+      display: grid;
+
+      gap: 12px;
+    }
+
+    .answer {
+      width: 100%;
+
+      text-align: left;
+
+      background: #030303;
+
+      color: white;
+
+      border:
+        1px solid #34343c;
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      font-weight: 500;
+    }
+
+    .answer:hover:not(:disabled) {
+      border-color: var(--primary);
+
+      background: #080808;
+    }
+
+    .answer.correct {
+      border-color: var(--success);
+
+      background:
+        rgba(49, 209, 124, 0.10);
+    }
+
+    .answer.wrong {
+      border-color: var(--danger);
+
+      background:
+        rgba(255, 61, 79, 0.10);
+    }
+
+    .answer:disabled {
+      cursor: default;
+    }
+
+
+    /* =========================================
+       FEEDBACK
+       ========================================= */
+
+    .feedback {
+      margin-top: 24px;
+
+      padding: 20px;
+
+      border-radius: 14px;
+
+      line-height: 1.6;
+    }
+
+    .feedback.success {
+      border:
+        1px solid rgba(49, 209, 124, 0.5);
+
+      background:
+        rgba(49, 209, 124, 0.06);
+    }
+
+    .feedback.failure {
+      border:
+        1px solid rgba(255, 61, 79, 0.5);
+
+      background:
+        rgba(255, 61, 79, 0.06);
+    }
+
+    .feedback h3 {
+      margin-bottom: 8px;
+    }
+
+
+    /* =========================================
+       ANALYSE DE RISQUE
+       ========================================= */
+
+    .risk-header {
+      margin-bottom: 25px;
+    }
+
+    .result-status {
+      display: inline-block;
+
+      padding: 8px 12px;
+
+      border-radius: 999px;
+
+      margin-top: 12px;
+
+      font-weight: 700;
+    }
+
+    .result-status.success {
+      color: var(--success);
+
+      background:
+        rgba(49, 209, 124, 0.08);
+    }
+
+    .result-status.failure {
+      color: var(--danger);
+
+      background:
+        rgba(255, 61, 79, 0.08);
+    }
+
+    .risk-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+
+      margin-bottom: 25px;
+    }
+
+    .risk-item {
+      background: #030303;
+
+      border:
+        1px solid #29292f;
+
+      border-radius: 13px;
+
+      padding: 16px;
+    }
+
+    .risk-item span {
+      display: block;
+
+      color: #73737c;
+
+      font-size: 0.78rem;
+
+      margin-bottom: 6px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.05em;
+    }
+
+    .risk-item strong {
+      line-height: 1.4;
+    }
+
+
+    /* =========================================
+       COMPARAISON DU RISQUE
+       ========================================= */
+
+    .risk-comparison {
+      display: grid;
+
+      grid-template-columns:
+        1fr 50px 1fr;
+
+      gap: 12px;
+
+      align-items: center;
+
+      margin: 25px 0;
+    }
+
+    .risk-score-box {
+      text-align: center;
+
+      background: #030303;
+
+      border:
+        1px solid #29292f;
+
+      border-radius: 15px;
+
+      padding: 20px;
+    }
+
+    .risk-score-box small {
+      color: #7d7d86;
+    }
+
+    .risk-score-box .score {
+      display: block;
+
+      font-size: 2rem;
+
+      font-weight: 900;
+
+      margin: 6px 0;
+    }
+
+    .critical {
+      color: var(--danger);
+    }
+
+    .medium {
+      color: var(--warning);
+    }
+
+    .low {
+      color: var(--success);
+    }
+
+    .arrow {
+      text-align: center;
+
+      font-size: 1.7rem;
+
+      color: var(--primary);
+    }
+
+
+    /* =========================================
+       BLOCS D'ANALYSE
+       ========================================= */
+
+    .analysis {
+      padding: 20px;
+
+      background: #030303;
+
+      border-radius: 14px;
+
+      border:
+        1px solid #29292f;
+
+      margin-bottom: 20px;
+
+      line-height: 1.7;
+    }
+
+    .analysis h3 {
+      margin-bottom: 8px;
+    }
+
+    .privacy {
+      text-align: center;
+
+      color: #5f5f69;
+
+      font-size: 0.78rem;
+
+      margin-top: 18px;
+    }
+
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 680px) {
+
+      body {
+        padding: 25px 14px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .tool-grid,
+      .levels,
+      .risk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .risk-comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+
+    }
+
+
+
+    /* =========================================
+       QUIZ 5 QUESTIONS / SCORE FINAL
+       ========================================= */
+
+    .question-counter {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .quiz-progress-bar {
+      width: 100%;
+      height: 7px;
+      background: #1b1b20;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      width: 20%;
+      background: var(--primary);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .score-card {
+      text-align: center;
+      background: #030303;
+      border: 1px solid #29292f;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 24px;
+    }
+
+    .score-card .score-main {
+      display: block;
+      font-size: 3rem;
+      font-weight: 900;
+      margin: 8px 0;
+      color: var(--primary);
+    }
+
+    .score-card .score-percent {
+      display: block;
+      color: #a2a2aa;
+      margin-bottom: 10px;
+    }
+
+    .score-card .score-label {
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .results-list {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .result-item {
+      background: #030303;
+      border: 1px solid #29292f;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .result-item.correct-result {
+      border-color: rgba(49, 209, 124, 0.45);
+    }
+
+    .result-item.wrong-result {
+      border-color: rgba(255, 61, 79, 0.45);
+    }
+
+    .result-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .result-item-title {
+      font-weight: 800;
+    }
+
+    .result-item-status {
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .result-item-status.ok {
+      color: var(--success);
+    }
+
+    .result-item-status.ko {
+      color: var(--danger);
+    }
+
+    .result-item p {
+      color: #a0a0aa;
+      line-height: 1.55;
+      margin-top: 7px;
+    }
+
+    .summary-box {
+      background: #030303;
+      border: 1px solid #29292f;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .summary-box h3 {
+      margin-bottom: 8px;
+    }
+
+
+
+
+    /* =========================================
+       CHARGEMENT DU QUESTIONNAIRE IA
+       ========================================= */
+
+    .generation-status {
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: #080808;
+      border: 1px solid #29292f;
+      border-left: 3px solid var(--primary);
+      border-radius: 10px;
+      color: #b7b7bf;
+      line-height: 1.55;
+    }
+
+    .generation-status strong {
+      display: block;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .primary-button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* =========================================
+       RAPPORT JOUR 4
+       ========================================= */
+
+    .report-profile {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .report-profile-item {
+      background: #030303;
+      border: 1px solid #29292f;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .report-profile-item span {
+      display: block;
+      color: #73737c;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .report-date {
+      color: #777780;
+      font-size: 0.82rem;
+      margin: -10px 0 22px;
+    }
+
+    .result-risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 14px;
+      margin-top: 12px;
+    }
+
+    .priority-title {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .priority-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .priority-item {
+      background: #070707;
+      border-left: 3px solid var(--primary);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #b7b7bf;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 680px) {
+      .report-profile,
+      .result-risk-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =========================================
+       PDF / IMPRESSION
+       ========================================= */
+
+    @media print {
+
+      @page {
+        size: A4;
+        margin: 14mm;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #111111 !important;
+        padding: 0 !important;
+        font-size: 11pt;
+      }
+
+      .container {
+        max-width: none !important;
+        width: 100% !important;
+      }
+
+      header,
+      #profileSection,
+      #quizSection,
+      .no-print {
+        display: none !important;
+      }
+
+      #riskSection {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
+      }
+
+      #riskSection::before {
+        content: "PIRATERISKS LAB — RAPPORT DE SENSIBILISATION CYBER";
+        display: block;
+        font-size: 18pt;
+        font-weight: 900;
+        margin-bottom: 4mm;
+        color: #111111;
+      }
+
+      #riskSection::after {
+        content: "PirateRisks Lab — Rapport généré automatiquement";
+        display: block;
+        margin-top: 8mm;
+        padding-top: 4mm;
+        border-top: 1px solid #cccccc;
+        color: #666666;
+        font-size: 8.5pt;
+        text-align: center;
+      }
+
+      .risk-header,
+      .score-card,
+      .summary-box,
+      .report-profile,
+      .result-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .score-card,
+      .summary-box,
+      .report-profile-item,
+      .result-item,
+      .priority-item {
+        background: #ffffff !important;
+        color: #111111 !important;
+        box-shadow: none !important;
+      }
+
+      .score-card,
+      .summary-box,
+      .report-profile-item,
+      .result-item {
+        border: 1px solid #d8d8d8 !important;
+      }
+
+      .result-item.correct-result {
+        border-left: 4px solid #2d9b63 !important;
+      }
+
+      .result-item.wrong-result {
+        border-left: 4px solid #c73742 !important;
+      }
+
+      .score-card .score-main {
+        color: #c73742 !important;
+      }
+
+      .score-card .score-percent,
+      .report-date,
+      .result-item p,
+      .report-profile-item span {
+        color: #555555 !important;
+      }
+
+      .result-item-status.ok {
+        color: #207848 !important;
+      }
+
+      .result-item-status.ko {
+        color: #b72d38 !important;
+      }
+
+      .priority-item {
+        border-left: 3px solid #c73742 !important;
+      }
+
+      .result-risk-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+  <!-- ======================================
+       HEADER
+       ====================================== -->
+
+  <header>
+
+    <div class="logo">
+      🏴‍☠️
+    </div>
+
+    <h1>
+  <span class="pirate-title">Pirate</span><span class="risks-title">Risks</span><span class="management-title">Management Lab</span>
+</h1>
+
+    <p class="pirate-quote">
+      La piraterie n'est jamais finie
+    </p>
+
+    <p class="subtitle">
+      Bienvenue sur votre laboratoires de simulations de situations cyber. Affrontez les pirates en prenant une décision
+      et découvrez immédiatement le risque que votre comportement permet d'éviter... ou de laisser apparaître ! 🏴‍☠️
+    </p>
+
+    <div class="tagline">
+      SENSIBILISATION CYBER × SIMULATION DE RISQUES
+    </div>
+
+    <div class="progress">
+
+      <div
+        class="progress-dot active"
+        id="progress1">
+      </div>
+
+      <div
+        class="progress-dot"
+        id="progress2">
+      </div>
+
+      <div
+        class="progress-dot"
+        id="progress3">
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ======================================
+       ÉTAPE 1 — PROFIL
+       ====================================== -->
+
+  <section
+    class="card"
+    id="profileSection"
+  >
+
+    <h2 class="section-title">
+      Votre profil professionnel
+    </h2>
+
+    <p class="section-description">
+      PirateRisks Management Lab utilise ces informations pour adapter
+      le scénario à votre environnement professionnel.
+    </p>
+
+
+    <form id="profileForm">
+
+
+      <!-- FONCTION -->
+
+      <div class="question-block">
+
+        <label for="jobRole">
+          1. Quelle est votre fonction ?
+        </label>
+
+        <select
+          id="jobRole"
+          required
+        >
+
+          <option value="">
+            Sélectionnez
+          </option>
+
+          <option value="management">
+            Direction / Management
+          </option>
+
+          <option value="strategy">
+            Stratégie / Intelligence économique
+          </option>
+
+          <option value="project_management">
+            Gestion de projets
+          </option>
+
+          <option value="finance">
+            Finance / Comptabilité
+          </option>
+
+          <option value="hr">
+            Ressources humaines
+          </option>
+
+          <option value="sales">
+            Commercial / Vente
+          </option>
+
+          <option value="marketing">
+            Marketing / Communication
+          </option>
+
+          <option value="it">
+            IT / Informatique
+          </option>
+
+          <option value="safety_security">
+            Sécurité / Sûreté / Gestion de risques / Gestion de crises
+          </option>
+
+          <option value="legal">
+            Juridique / Conformité
+          </option>
+
+          <option value="purchasing">
+            Achats
+          </option>
+
+          <option value="operations">
+            Opérations
+          </option>
+
+          <option value="management">
+            Logistique / Supply Chain
+          </option>
+
+          <option value="administrative">
+            Administratif
+          </option>
+
+          <option value="other">
+            Autre
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- SECTEUR -->
+
+      <div class="question-block">
+
+        <label for="industry">
+          2. Dans quel secteur travaillez-vous ?
+        </label>
+
+        <select
+          id="industry"
+          required
+        >
+
+          <option value="">
+            Sélectionnez
+          </option>
+
+          <option value="technology">
+            Technologie / IT
+          </option>
+
+          <option value="financial_services">
+            Banque / Finance / Assurance / Fond
+          </option>
+
+          <option value="agri_food">
+            Agroalimentaire
+          </option>
+
+          <option value="energy">
+            Énergie
+          </option>
+
+          <option value="healthcare">
+            Santé
+          </option>
+
+          <option value="defense">
+            Défense / Aéronautique / Espace
+          </option>
+
+          <option value="consulting">
+            Conseil / Services
+          </option>
+
+          <option value="retail">
+            Commerce / Retail
+          </option>
+
+          <option value="construction">
+            BTP
+          </option>
+
+          <option value="education">
+            Éducation
+          </option>
+
+          <option value="public_sector">
+            Administration / Secteur public
+          </option>
+
+          <option value="ngo">
+            Association / ONG
+          </option>
+
+          <option value="other">
+            Autre
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- OUTILS -->
+
+      <div class="question-block">
+
+        <span class="label">
+          3. Quels outils utilisez-vous régulièrement ?
+        </span>
+
+        <p class="helper">
+          Plusieurs réponses sont possibles.
+        </p>
+
+
+        <div class="tool-grid">
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="email"
+              name="tools"
+              value="email"
+            >
+
+            <label for="email">
+              📧 Email
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="messaging"
+              name="tools"
+              value="teams_slack"
+            >
+
+            <label for="messaging">
+              💬 Teams / Slack
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="workspace"
+              name="tools"
+              value="workspace"
+            >
+
+            <label for="workspace">
+              ☁️ Microsoft 365 / Google Workspace
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="crm"
+              name="tools"
+              value="crm"
+            >
+
+            <label for="crm">
+              📊 CRM
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="erp"
+              name="tools"
+              value="erp"
+            >
+
+            <label for="erp">
+              🏢 ERP
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="cloud"
+              name="tools"
+              value="cloud_storage"
+            >
+
+            <label for="cloud">
+              📁 Stockage cloud
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="vpn"
+              name="tools"
+              value="vpn"
+            >
+
+            <label for="vpn">
+              🔐 VPN / Accès distant
+            </label>
+
+          </div>
+
+
+          <div class="check-option">
+
+            <input
+              type="checkbox"
+              id="ai"
+              name="tools"
+              value="generative_ai"
+            >
+
+            <label for="ai">
+              🤖 IA générative
+            </label>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- NIVEAU CYBER -->
+
+      <div class="question-block">
+
+        <span class="label">
+          4. Quel est votre niveau en cybersécurité ?
+        </span>
+
+
+        <div class="levels">
+
+
+          <div class="radio-option">
+
+            <input
+              type="radio"
+              id="beginner"
+              name="level"
+              value="beginner"
+              required
+            >
+
+            <label for="beginner">
+              🌱 Débutant
+            </label>
+
+          </div>
+
+
+          <div class="radio-option">
+
+            <input
+              type="radio"
+              id="intermediate"
+              name="level"
+              value="intermediate"
+            >
+
+            <label for="intermediate">
+              🛡️ Intermédiaire
+            </label>
+
+          </div>
+
+
+          <div class="radio-option">
+
+            <input
+              type="radio"
+              id="advanced"
+              name="level"
+              value="advanced"
+            >
+
+            <label for="advanced">
+              ⚡ Avancé
+            </label>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="primary-button"
+        type="submit"
+        id="generateButton"
+      >
+        Générer mon questionnaire cyber →
+      </button>
+
+      <div
+        class="generation-status hidden"
+        id="generationStatus"
+        role="status"
+        aria-live="polite"
+      >
+        <strong>
+          🏴‍☠️ Génération de votre questionnaire en cours…
+        </strong>
+
+        Patientez quelques instants pendant que PirateRisks Mangement Lab analyse votre profil
+        et prépare vos 5 situations cyber personnalisées.
+      </div>
+
+
+    </form>
+
+
+    <p class="privacy">
+      🔒 Aucun nom, email ou nom d'entreprise n'est demandé.
+    </p>
+
+
+  </section>
+
+
+  <!-- ======================================
+       ÉTAPE 2 — QUIZ 5 QUESTIONS
+       ====================================== -->
+
+  <section
+    class="card hidden"
+    id="quizSection"
+  >
+
+    <span
+      class="question-counter"
+      id="questionCounter"
+    >
+      Question 1/5
+    </span>
+
+    <div class="quiz-progress-bar">
+      <div
+        class="quiz-progress-fill"
+        id="quizProgressFill"
+      ></div>
+    </div>
+
+    <span
+      class="scenario-badge"
+      id="scenarioCategory"
+    >
+      Scénario personnalisé
+    </span>
+
+    <h2 class="section-title">
+      Quelle décision prenez-vous ?
+    </h2>
+
+    <p
+      class="scenario"
+      id="scenarioText"
+    ></p>
+
+    <div
+      class="answers"
+      id="answersContainer"
+    ></div>
+
+    <div
+      id="feedbackBox"
+      class="feedback hidden"
+    >
+
+      <h3 id="feedbackTitle"></h3>
+
+      <p id="feedbackText"></p>
+
+    </div>
+
+    <button
+      class="primary-button hidden"
+      id="nextQuestionButton"
+      type="button"
+      style="margin-top: 20px;"
+    >
+      Question suivante →
+    </button>
+
+  </section>
+
+
+  <!-- ======================================
+       ÉTAPE 3 — RÉSULTATS & ANALYSE DE RISQUE
+       ====================================== -->
+
+  <section
+    class="card hidden"
+    id="riskSection"
+  >
+
+    <div class="risk-header">
+
+      <h2 class="section-title">
+        🏴‍☠️ Résultats Pirate RisksManagement Lab
+      </h2>
+
+      <p class="section-description">
+        Votre score final et les risques que vous avez maîtrisés — ou laissés ouverts.
+      </p>
+
+    </div>
+
+
+    <div class="report-profile" id="reportProfile">
+
+      <div class="report-profile-item">
+        <span>Fonction</span>
+        <strong id="reportJobRole">—</strong>
+      </div>
+
+      <div class="report-profile-item">
+        <span>Secteur</span>
+        <strong id="reportIndustry">—</strong>
+      </div>
+
+      <div class="report-profile-item">
+        <span>Niveau cyber déclaré</span>
+        <strong id="reportCyberLevel">—</strong>
+      </div>
+
+      <div class="report-profile-item">
+        <span>Outils utilisés</span>
+        <strong id="reportTools">—</strong>
+      </div>
+
+    </div>
+
+    <p class="report-date" id="reportDate"></p>
+
+    <div class="score-card">
+
+      <small>
+        Score final
+      </small>
+
+      <span
+        class="score-main"
+        id="finalQuizScore"
+      >
+        0/5
+      </span>
+
+      <span
+        class="score-percent"
+        id="finalQuizPercent"
+      >
+        0 %
+      </span>
+
+      <div
+        class="score-label"
+        id="finalQuizLabel"
+      >
+        Niveau en cours d'analyse
+      </div>
+
+    </div>
+
+    <div class="summary-box">
+
+      <h3>
+        Synthèse
+      </h3>
+
+      <p id="finalSummaryText"></p>
+
+    </div>
+
+    <h3 style="margin-bottom: 14px;">
+      Détail des 5 situations
+    </h3>
+
+    <div
+      class="results-list"
+      id="resultsList"
+    ></div>
+
+    <div class="summary-box">
+
+      <h3>
+        🛡️ Réflexes à retenir
+      </h3>
+
+      <p id="globalReflexes"></p>
+
+      <h4 class="priority-title">Priorités personnelles</h4>
+
+      <div
+        class="priority-list"
+        id="priorityList"
+      ></div>
+
+    </div>
+
+    <button
+      class="primary-button no-print"
+      type="button"
+      onclick="window.print()"
+    >
+      📄 Télécharger mon rapport PDF
+    </button>
+
+    <button
+      class="secondary-button no-print"
+      type="button"
+      id="restartButton"
+    >
+      Recommencer
+    </button>
+
+  </section>
+
+
+</div>
+
+
+<script>
+
+  /*
+   * =========================================
+   * PIRATE RISKSMANAGEMENT LAB — QUIZ 5 QUESTIONS
+   * =========================================
+   */
+
+  const profileForm =
+    document.getElementById("profileForm");
+
+  const profileSection =
+    document.getElementById("profileSection");
+
+  const quizSection =
+    document.getElementById("quizSection");
+
+  const riskSection =
+    document.getElementById("riskSection");
+
+  const nextQuestionButton =
+    document.getElementById("nextQuestionButton");
+
+  const generateButton =
+    document.getElementById("generateButton");
+
+  const generationStatus =
+    document.getElementById("generationStatus");
+
+  let currentProfile = null;
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let results = [];
+
+
+  /*
+   * =========================================
+   * FORMULAIRE
+   * =========================================
+   */
+
+  profileForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      const tools =
+        Array.from(
+          document.querySelectorAll(
+            'input[name="tools"]:checked'
+          )
+        ).map(
+          item => item.value
+        );
+
+      if (tools.length === 0) {
+        alert(
+          "Veuillez sélectionner au moins un outil."
+        );
+        return;
+      }
+
+      currentProfile = {
+        job_role:
+          document.getElementById(
+            "jobRole"
+          ).value,
+
+        industry:
+          document.getElementById(
+            "industry"
+          ).value,
+
+        tools:
+          tools,
+
+        cyber_level:
+          document.querySelector(
+            'input[name="level"]:checked'
+          ).value
+      };
+
+      generateButton.disabled = true;
+      generateButton.textContent =
+        "🏴‍☠️ Génération du questionnaire...";
+
+      generationStatus.classList.remove(
+        "hidden"
+      );
+
+      try {
+
+        const response = await fetch(
+          "/api/generate-scenario",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+              currentProfile
+            )
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+            "Erreur lors de la génération du quiz."
+          );
+        }
+
+        if (
+          !data.questions ||
+          !Array.isArray(data.questions) ||
+          data.questions.length !== 5
+        ) {
+          throw new Error(
+            "Le quiz généré ne contient pas exactement 5 questions."
+          );
+        }
+
+        questions =
+          data.questions;
+
+        generationStatus.classList.add(
+          "hidden"
+        );
+
+        generateButton.disabled = false;
+        generateButton.textContent =
+          "Générer mon questionnaire cyber →";
+
+        currentQuestionIndex = 0;
+        score = 0;
+        results = [];
+
+        profileSection.classList.add(
+          "hidden"
+        );
+
+        quizSection.classList.remove(
+          "hidden"
+        );
+
+        document
+          .getElementById("progress2")
+          .classList.add("active");
+
+        showCurrentQuestion();
+
+      } catch (error) {
+
+        console.error(
+          "Pirate RisksManagement Lab :",
+          error
+        );
+
+        generateButton.disabled = false;
+        generateButton.textContent =
+          "Générer mon questionnaire cyber →";
+
+        generationStatus.classList.add(
+          "hidden"
+        );
+
+        alert(
+          "Impossible de générer le quiz : " +
+          error.message
+        );
+      }
+    }
+  );
+
+
+  /*
+   * =========================================
+   * AFFICHAGE QUESTION
+   * =========================================
+   */
+
+  function showCurrentQuestion() {
+
+    const question =
+      questions[currentQuestionIndex];
+
+    const number =
+      currentQuestionIndex + 1;
+
+    document
+      .getElementById("questionCounter")
+      .textContent =
+      "Question " + number + "/5";
+
+    document
+      .getElementById("quizProgressFill")
+      .style.width =
+      (number * 20) + "%";
+
+    document
+      .getElementById("scenarioCategory")
+      .textContent =
+      question.category ||
+      "Scénario cyber";
+
+    document
+      .getElementById("scenarioText")
+      .textContent =
+      question.scenario ||
+      "Scénario indisponible.";
+
+    const answersContainer =
+      document.getElementById(
+        "answersContainer"
+      );
+
+    answersContainer.innerHTML = "";
+
+    const feedbackBox =
+      document.getElementById(
+        "feedbackBox"
+      );
+
+    feedbackBox.className =
+      "feedback hidden";
+
+    nextQuestionButton.classList.add(
+      "hidden"
+    );
+
+    if (
+      !Array.isArray(question.answers) ||
+      question.answers.length !== 4
+    ) {
+      answersContainer.innerHTML =
+        "<p>Erreur : les réponses générées sont invalides.</p>";
+      return;
+    }
+
+    question.answers.forEach(
+      function(answer, index) {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+        const letter =
+          String.fromCharCode(
+            65 + index
+          );
+
+        button.className =
+          "answer";
+
+        button.innerHTML =
+          "<strong>" +
+          letter +
+          ".</strong> " +
+          answer;
+
+        button.addEventListener(
+          "click",
+          function() {
+            selectAnswer(
+              index,
+              button
+            );
+          }
+        );
+
+        answersContainer.appendChild(
+          button
+        );
+      }
+    );
+  }
+
+
+  /*
+   * =========================================
+   * CORRECTION / SCORE
+   * =========================================
+   */
+
+  function selectAnswer(
+    selectedIndex,
+    clickedButton
+  ) {
+
+    const question =
+      questions[currentQuestionIndex];
+
+    const correctAnswer =
+      Number(
+        question.correctAnswer
+      );
+
+    const isCorrect =
+      selectedIndex === correctAnswer;
+
+    const buttons =
+      document.querySelectorAll(
+        ".answer"
+      );
+
+    buttons.forEach(
+      function(button, index) {
+
+        button.disabled = true;
+
+        if (
+          index === correctAnswer
+        ) {
+          button.classList.add(
+            "correct"
+          );
+        }
+      }
+    );
+
+    if (!isCorrect) {
+      clickedButton.classList.add(
+        "wrong"
+      );
+    }
+
+    if (isCorrect) {
+      score++;
+    }
+
+    results.push({
+      questionNumber:
+        currentQuestionIndex + 1,
+
+      category:
+        question.category,
+
+      scenario:
+        question.scenario,
+
+      selectedIndex:
+        selectedIndex,
+
+      correctAnswer:
+        correctAnswer,
+
+      correct:
+        isCorrect,
+
+      feedback:
+        question.feedback,
+
+      risk:
+        question.risk || {}
+    });
+
+    const feedbackBox =
+      document.getElementById(
+        "feedbackBox"
+      );
+
+    const feedbackTitle =
+      document.getElementById(
+        "feedbackTitle"
+      );
+
+    const feedbackText =
+      document.getElementById(
+        "feedbackText"
+      );
+
+    feedbackBox.classList.remove(
+      "hidden"
+    );
+
+    if (isCorrect) {
+
+      feedbackBox.className =
+        "feedback success";
+
+      feedbackTitle.textContent =
+        "✅ Bonne réponse";
+
+    } else {
+
+      feedbackBox.className =
+        "feedback failure";
+
+      const correctLetter =
+        String.fromCharCode(
+          65 + correctAnswer
+        );
+
+      feedbackTitle.textContent =
+        "❌ Mauvaise réponse — la bonne réponse était " +
+        correctLetter;
+    }
+
+    feedbackText.textContent =
+      question.feedback ||
+      "Analyse pédagogique non disponible.";
+
+    nextQuestionButton.classList.remove(
+      "hidden"
+    );
+
+    if (
+      currentQuestionIndex ===
+      questions.length - 1
+    ) {
+      nextQuestionButton.textContent =
+        "Voir mes résultats →";
+    } else {
+      nextQuestionButton.textContent =
+        "Question suivante →";
+    }
+  }
+
+
+  /*
+   * =========================================
+   * QUESTION SUIVANTE
+   * =========================================
+   */
+
+  nextQuestionButton.addEventListener(
+    "click",
+    function() {
+
+      if (
+        currentQuestionIndex <
+        questions.length - 1
+      ) {
+
+        currentQuestionIndex++;
+
+        showCurrentQuestion();
+
+      } else {
+
+        showFinalResults();
+
+      }
+    }
+  );
+
+
+  /*
+   * =========================================
+   * RÉSULTATS FINAUX
+   * =========================================
+   */
+
+
+  function getReadableJobRole(value) {
+    const labels = {
+      management: "Direction / Management",
+      finance: "Finance / Comptabilité",
+      hr: "Ressources humaines",
+      sales: "Commercial / Vente",
+      marketing: "Marketing / Communication",
+      it: "IT / Informatique",
+      cybersecurity: "Cybersécurité",
+      legal: "Juridique / Conformité",
+      purchasing: "Achats",
+      operations: "Opérations",
+      other: "Autre"
+    };
+    return labels[value] || value || "Non renseigné";
+  }
+
+  function getReadableIndustry(value) {
+    const labels = {
+      technology: "Technologie / IT",
+      financial_services: "Banque / Finance / Assurance",
+      industry: "Industrie",
+      healthcare: "Santé",
+      consulting: "Conseil / Services",
+      retail: "Commerce / Retail",
+      construction: "BTP",
+      education: "Éducation",
+      public_sector: "Administration / Secteur public",
+      ngo: "Association / ONG",
+      other: "Autre"
+    };
+    return labels[value] || value || "Non renseigné";
+  }
+
+  function getReadableCyberLevel(value) {
+    const labels = {
+      beginner: "Débutant",
+      intermediate: "Intermédiaire",
+      advanced: "Avancé"
+    };
+    return labels[value] || value || "Non renseigné";
+  }
+
+  function getReadableTool(value) {
+    const labels = {
+      email: "Email",
+      teams_slack: "Teams / Slack",
+      workspace: "Microsoft 365 / Google Workspace",
+      crm: "CRM",
+      erp: "ERP",
+      cloud_storage: "Stockage cloud",
+      vpn: "VPN / Accès distant",
+      generative_ai: "IA générative"
+    };
+    return labels[value] || value;
+  }
+
+  function populateReportProfile() {
+    document.getElementById("reportJobRole").textContent =
+      getReadableJobRole(currentProfile.job_role);
+
+    document.getElementById("reportIndustry").textContent =
+      getReadableIndustry(currentProfile.industry);
+
+    document.getElementById("reportCyberLevel").textContent =
+      getReadableCyberLevel(currentProfile.cyber_level);
+
+    document.getElementById("reportTools").textContent =
+      currentProfile.tools.map(getReadableTool).join(" • ");
+
+    document.getElementById("reportDate").textContent =
+      "Rapport généré le " +
+      new Date().toLocaleDateString("fr-FR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
+  }
+
+  function showFinalResults() {
+
+    quizSection.classList.add(
+      "hidden"
+    );
+
+    riskSection.classList.remove(
+      "hidden"
+    );
+
+    document
+      .getElementById("progress3")
+      .classList.add("active");
+
+    populateReportProfile();
+
+    const percent =
+      Math.round(
+        (score / 5) * 100
+      );
+
+    const level =
+      getScoreLevel(score);
+
+    document
+      .getElementById("finalQuizScore")
+      .textContent =
+      score + "/5";
+
+    document
+      .getElementById("finalQuizPercent")
+      .textContent =
+      percent + " %";
+
+    document
+      .getElementById("finalQuizLabel")
+      .textContent =
+      level;
+
+    const mastered =
+      results.filter(
+        result => result.correct
+      ).length;
+
+    const missed =
+      results.length - mastered;
+
+    document
+      .getElementById("finalSummaryText")
+      .textContent =
+      "Vous avez maîtrisé " +
+      mastered +
+      " risque(s) sur 5 et laissé " +
+      missed +
+      " risque(s) non maîtrisé(s). " +
+      "Votre score global est de " +
+      percent +
+      " %.";
+
+    buildResultsList();
+
+    const reflexes =
+      results
+        .map(
+          result =>
+            result.risk &&
+            result.risk.securityReflex
+              ? result.risk.securityReflex
+              : null
+        )
+        .filter(Boolean);
+
+    document
+      .getElementById("globalReflexes")
+      .textContent =
+      reflexes.length
+        ? reflexes.join(" • ")
+        : "Toujours vérifier une situation inhabituelle avant d'agir.";
+
+    const priorityList =
+      document.getElementById("priorityList");
+
+    priorityList.innerHTML = "";
+
+    const priorities =
+      results
+        .filter(
+          result =>
+            !result.correct &&
+            result.risk &&
+            result.risk.securityReflex
+        )
+        .map(
+          result =>
+            result.risk.securityReflex
+        );
+
+    const finalPriorities =
+      priorities.length
+        ? priorities
+        : reflexes.slice(0, 3);
+
+    finalPriorities.forEach(
+      function(priority) {
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "priority-item";
+
+        item.textContent =
+          priority;
+
+        priorityList.appendChild(item);
+      }
+    );
+  }
+
+
+  /*
+   * =========================================
+   * DÉTAIL DES 5 RISQUES
+   * =========================================
+   */
+
+  function buildResultsList() {
+
+    const resultsList =
+      document.getElementById(
+        "resultsList"
+      );
+
+    resultsList.innerHTML = "";
+
+    results.forEach(
+      function(result) {
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "result-item " +
+          (
+            result.correct
+              ? "correct-result"
+              : "wrong-result"
+          );
+
+        const top =
+          document.createElement(
+            "div"
+          );
+
+        top.className =
+          "result-item-top";
+
+        const title =
+          document.createElement(
+            "div"
+          );
+
+        title.className =
+          "result-item-title";
+
+        title.textContent =
+          "Question " +
+          result.questionNumber +
+          " — " +
+          (
+            result.category ||
+            "Risque cyber"
+          );
+
+        const status =
+          document.createElement(
+            "div"
+          );
+
+        status.className =
+          "result-item-status " +
+          (
+            result.correct
+              ? "ok"
+              : "ko"
+          );
+
+        status.textContent =
+          result.correct
+            ? "✅ Maîtrisé"
+            : "⚠️ Non maîtrisé";
+
+        top.appendChild(
+          title
+        );
+
+        top.appendChild(
+          status
+        );
+
+        item.appendChild(
+          top
+        );
+
+        const riskGrid =
+          document.createElement("div");
+
+        riskGrid.className =
+          "result-risk-grid";
+
+        const fields = [
+          ["Actif", result.risk.asset || "Non renseigné"],
+          ["Menace", result.risk.threat || "Non renseignée"],
+          ["Vecteur", result.risk.vector || "Non renseigné"],
+          ["Vulnérabilité", result.risk.vulnerability || "Non renseignée"],
+          ["Événement redouté", result.risk.event || "Non renseigné"],
+          ["Impact potentiel", result.risk.impact || "Non renseigné"]
+        ];
+
+        fields.forEach(
+          function(field) {
+            const p =
+              document.createElement("p");
+
+            p.textContent =
+              field[0] + " : " + field[1];
+
+            riskGrid.appendChild(p);
+          }
+        );
+
+        const reflex =
+          document.createElement("p");
+
+        reflex.textContent =
+          "Réflexe : " +
+          (
+            result.risk.securityReflex ||
+            "Vérifier avant d'agir."
+          );
+
+        item.appendChild(riskGrid);
+        item.appendChild(reflex);
+
+        resultsList.appendChild(
+          item
+        );
+      }
+    );
+  }
+
+
+  /*
+   * =========================================
+   * NIVEAU FINAL
+   * =========================================
+   */
+
+  function getScoreLevel(score) {
+
+    if (score === 5) {
+      return "🏴‍☠️ Expert cyber";
+    }
+
+    if (score === 4) {
+      return "🛡️ Très bon niveau";
+    }
+
+    if (score === 3) {
+      return "⚠️ Vigilance correcte";
+    }
+
+    if (score === 2) {
+      return "🔶 Exposition importante";
+    }
+
+    return "🔴 Risque élevé";
+  }
+
+
+  /*
+   * =========================================
+   * RECOMMENCER
+   * =========================================
+   */
+
+  document
+    .getElementById("restartButton")
+    .addEventListener(
+      "click",
+      function() {
+        window.location.reload();
+      }
+    );
+
+</script>
+
+
+</body>
+
+</html>
